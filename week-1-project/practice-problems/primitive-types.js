@@ -59,15 +59,15 @@ try {
   // the type of a value is very important to understanding how JS works
   const typeofTests = [
     // boolean values
-    { name: 'boo, true', args: [true], expected: '' },
-    { name: 'boo, false', args: [false], expected: '' },
+    { name: 'boo, true', args: [true], expected: 'boolean' },
+    { name: 'boo, false', args: [false], expected: 'boolean' },
     // null's type is 'null'.  just remember, don't try yet to understand
     { name: 'obj, true', args: [null], expected: '' },
     // undefined. like with null, there is only one value with this type
-    { name: 'und, undefined', args: [undefined], expected: '' },
+    { name: 'und, undefined', args: [undefined], expected: 'undefined' },
     // strings are anything with quotes around it
-    { name: 'str, ', args: [''], expected: '' },
-    { name: 'str, anything with quotes!', args: ['anything with quotes!'], expected: '' },
+    { name: 'str, ', args: [''], expected: 'string' },
+    { name: 'str, anything with quotes!', args: ['anything with quotes!'], expected: 'string' },
     // numbers are a bit more strange and varied
     { name: 'num, 0.0', args: [0.0], expected: 'number' },
     { name: 'num, NaN', args: [NaN], expected: 'number' },

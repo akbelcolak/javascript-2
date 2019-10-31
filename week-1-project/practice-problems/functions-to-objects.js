@@ -132,7 +132,10 @@ try {
 
     const obj = {
       array: [3],
-      mergeArrays: function (arrToMerge) { }
+      mergeArrays: function (arrToMerge) {return [...this.array, ...arrToMerge] // the points are to expand the array
+      
+        //another way to do it is ' return this.array.concat(arrToMerge); '
+      }
     }
 
 
@@ -166,7 +169,7 @@ try {
 
     const obj = {
       array: [3],
-      mergeArrays: function (arrToMerge) { }
+      mergeArrays: function (arrToMerge) {  return obj.array.concat(arrToMerge) }
     }
 
     obj.mergeArrays([2]);
