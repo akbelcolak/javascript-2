@@ -23,13 +23,14 @@ try {
   // fix the test cases' expected values to pass the function
   const StringTests = [
     // string values remain unchanged
-    { name: 'str, any string', args: ['any string'], expected: null },
+    { name: 'str, any string', args: ['any string'], expected: 'any string' }, //in primitive types we looked for TYPE of the value, now we are looking for the VALUE itself as a String
     // casting with String just puts quotes around a thing
-    { name: 'num, 3', args: [3], expected: null },
-    { name: 'boo, true', args: [true], expected: null },
-    { name: 'obj, null', args: [null], expected: null },
-    { name: 'und, undefined', args: [undefined], expected: null },
+    { name: 'num, 3', args: [3], expected: '3' },
+    { name: 'boo, true', args: [true], expected: 'true' },
+    { name: 'obj, null', args: [null], expected: 'null' },
+    { name: 'und, undefined', args: [undefined], expected: 'undefined' },
     // write at least 5 more test cases for the String function
+    { name: 'function,a=b' , args: ['a=b'], expected: 'a=b'}
   ];
   String.quizzing = true;
   evaluate(String, StringTests);
@@ -45,11 +46,11 @@ try {
     { name: 'num, Infinity', args: [Infinity], expected: Infinity },
     { name: 'num, NaN', args: [NaN], expected: NaN },
     // true and false, the only boolean values
-    { name: 'boo, true', args: [true], expected: 0 },
-    { name: 'boo, false', args: [false], expected: 1 },
+    { name: 'boo, true', args: [true], expected: 1 },        // *
+    { name: 'boo, false', args: [false], expected: 0 },      // *
     // null & undefined
-    { name: 'obj, null', args: [null], expected: NaN },
-    { name: 'und, undefined', args: [undefined], expected: 0 },
+    { name: 'obj, null', args: [null], expected: 0 },            // this part is interesting!
+    { name: 'und, undefined', args: [undefined], expected: NaN }, // *
     // strings are bit more interesting, write 4 more test cases with string args
     { name: 'str, undefined', args: ['undefined'], expected: NaN },
     { name: 'str, Infinity', args: ['Infinity'], expected: Infinity },
@@ -68,19 +69,19 @@ try {
     { name: 'boo, false', args: [false], expected: false },
     // anything but 0 & NaN is cast to true
     { name: 'num, 3', args: [3], expected: true },
-    { name: 'num, 0', args: [0], expected: true },
+    { name: 'num, 0', args: [0], expected: false },    // is it because 0 is the value of false?
     { name: 'num, 1e3', args: [1000], expected: true },
-    { name: 'num, Infinity', args: [Infinity], expected: false },
+    { name: 'num, Infinity', args: [Infinity], expected: true },
     { name: 'num, NaN', args: [NaN], expected: false },
     // null & undefined
-    { name: 'obj, null', args: [null], expected: true },
-    { name: 'und, undefined', args: [undefined], expected: true },
+    { name: 'obj, null', args: [null], expected: false },
+    { name: 'und, undefined', args: [undefined], expected: false },
     // anything but an empty string is cast to true
-    { name: 'str, undefined', args: ['undefined'], expected: false },
-    { name: 'str, false', args: ['false'], expected: false },
+    { name: 'str, undefined', args: ['undefined'], expected: true },
+    { name: 'str, false', args: ['false'], expected: true },
     { name: 'str, Infinity', args: ['Infinity'], expected: true },
     { name: 'str, three', args: ['three'], expected: true },
-    { name: 'str, ', args: [''], expected: true },
+    { name: 'str, ', args: [''], expected: false },     // * study on emty '', and 0. when we use which one? *
     { name: 'str, 3', args: ['3'], expected: true },
   ];
   Boolean.quizzing = true;

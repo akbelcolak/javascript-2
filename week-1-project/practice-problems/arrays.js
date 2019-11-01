@@ -1,17 +1,15 @@
-// https://www.youtube.com/watch?v=W1NTK09o-vM&list=PLzV58Zm8FuBJFfQN5il3ujx6FDAY8Ds3u&index=4    
+// https://www.youtube.com/watch?v=W1NTK09o-vM&list=PLzV58Zm8FuBJFfQN5il3ujx6FDAY8Ds3u&index=4
 // https://medium.com/@naveenkarippai/learning-how-references-work-in-javascript-a066a4e15600
 
 {
-  const pageTitle = 'arrays';
+  const pageTitle = "arrays";
   const header = document.createElement("h2");
   header.innerHTML = pageTitle;
   document.body.appendChild(header);
   console.groupCollapsed(pageTitle);
 }
 try {
-
   function example_arraysAreStoredByReference() {
-
     // primitives are stored "by value"
     // or directly in the slot of a variable
     const number5 = 5;
@@ -30,9 +28,8 @@ try {
     array2.push(6);
     console.log(array1);
 
-    array1.push('hi!');
+    array1.push("hi!");
     console.log(array2);
-
 
     // to create a new array in memory, you must write new square brackets
     const array3 = [];
@@ -40,56 +37,56 @@ try {
     array2 = array3;
     // but not effect the array1 variable
     console.log(array1);
-
   }
   evaluate(example_arraysAreStoredByReference);
 
   function example_comparingArrays() {
     let a = [0, 1];
     let b = [0, 1];
-    console.assert(a !== b, 'a should not strictly equal b');
+    console.assert(a !== b, "a should not strictly equal b");
 
     b = a;
-    console.assert(a === b, 'a should strictly equal b');
+    console.assert(a === b, "a should strictly equal b");
 
     // it's not about the contents of the array
     // it's about the array the variable points to
   }
   evaluate(example_comparingArrays);
 
-
   function example_swappingArrayReferences() {
-    let a = ["b"], b = ["a"], temp = null;
+    let a = ["b"],
+      b = ["a"],
+      temp = null;
 
     // swap the arrays to which each variable points
     temp = a;
     a = b;
     b = temp;
 
-    console.assert(a[0] === 'a', 'a[0] should store "a"');
-    console.assert(b[0] === 'b', 'b[0] should store "b"');
+    console.assert(a[0] === "a", 'a[0] should store "a"');
+    console.assert(b[0] === "b", 'b[0] should store "b"');
   }
-  evaluate(example_swappingArrayReferences);
-
+  evaluate(example_swappingArrayReferences); // swapping referances
 
   function example_swappingArrayValues() {
-    let a = ["b"], b = ["a"], temp = null;
+    let a = ["b"],
+      b = ["a"],
+      temp = null;
 
     // swap the arrays to which each variable points
     temp = a[0];
     a[0] = b[0];
     b[0] = temp;
 
-    console.assert(a[0] === 'a', 'a[0] should store "a"');
-    console.assert(b[0] === 'b', 'b[0] should store "b"');
+    console.assert(a[0] === "a", 'a[0] should store "a"');
+    console.assert(b[0] === "b", 'b[0] should store "b"');
   }
-  evaluate(example_swappingArrayValues);
-
+  evaluate(example_swappingArrayValues); // swapping values
 
   function example_garbageCollectingArrays() {
     // if no variables reference an array, it disappears
 
-    let reference1 = ['hi!'];
+    let reference1 = ["hi!"];
     let reference2 = reference1;
 
     reference1 = null;
@@ -100,94 +97,161 @@ try {
   }
   evaluate(example_garbageCollectingArrays);
 
-
   function passTheAssertions1() {
-    ; // declare and assign a1
-    ; // declare and assign a2
-    console.assert(a1 === a2, 'a1 should strictly equal a2');
+    // declare and assign a1
+    let a1 = []; // declare and assign a2
+    let a2 = a1;
+    console.assert(a1 === a2, "a1 should strictly equal a2"); // declare and assign b1
 
-    ; // declare and assign b1
-    ; // declare and assign b2
-    console.assert(b1 !== b2, 'b1 should not strictly equal b2');
+    let b1 = []; // declare and assign b2
+    let b2 = [];
+    console.assert(b1 !== b2, "b1 should not strictly equal b2"); // write one line to pass the assertions
 
     // ---
 
-    ; // write one line to pass the assertions
-    console.assert(a1[0] === a2[0], 'a1[0] should strictly equal a2[0]');
-    console.assert(a1[0] === 'hi!', 'a1.x should strictly equal "hi!"');
+    // first try
+    // a2 [0] = a1[0] = ['hi!'];
+    a1 = a2 = ["hi!"];
 
-    ; // write two lines to pass the assertions
-    ;
-    console.assert(b1[0] === b2[0], 'b1[0] should strictly equal b2[0]');
-    console.assert(b1[0] === 'bye!', 'b1.x should strictly equal "bye!"');
+    console.assert(a1[0] === a2[0], "a1[0] should strictly equal a2[0]");
+    console.assert(a1[0] === "hi!", 'a1.x should strictly equal "hi!"'); // write two lines to pass the assertions
+
+    // b1 [0] = b2 [0]; //did not pass
+    b1 = ["bye!"];
+    // b1 [0] = ['bye!']; // did not pass
+    b1 = b2 = ["bye!"];
+
+    console.assert(b1[0] === b2[0], "b1[0] should strictly equal b2[0]");
+    console.assert(b1[0] === "bye!", 'b1.x should strictly equal "bye!"');
   }
   evaluate(passTheAssertions1);
 
-
   function passTheAssertions2() {
+    /*
+    I could not find the error in this code, probably a syntax one, so I rewrite the code
     const value1 = 5;
     let reference1 = [];
 
-    ; // write this line
+    // write this line
+    // let value2 = value1;
+    value2 = value1;
     console.assert(value2 === value1, "value1 should strictly equal value2");
 
-    ; // write this line
+    let reference2 = reference1; // write this line
+    
     console.assert(reference2 === reference1, "reference1 should strictly equal reference2");
 
     value2 = value2 + 1; // write this line
+    
+    
+    // value1 = [];
+    // value1 = value2;
+    // value2 = value1;
+    // value2 = value2 + 1; console.log(value1);
+     // referance1 [0] = [5];
+     //  referance1 = value1;
+    // value1 is already !== null, so I did not changed anything.
+
     console.assert(value1 !== null, "value1 should strictly equal ___");
 
-    ; // write this line
+    // write this line
+    // reference2 [0] = reference1 [0] = ['hi!'];
+    referance1[0] = 'hi!';
+
+
     console.assert(reference1[0] === reference2[0], "references[0] should be strictly equal");
     console.assert(reference1[0] === 'hi!', "reference1[0] should be strictly equal to 'hi!'");
 
-    ; // write this line
+    // write this line
+    reference1 = reference2 ;
+
     console.assert(reference1 === reference2, "references should be strictly equal");
 
     // remove the array from memory
-    ; // write this line
-    ; // write this line
+    // write this line
+    reference1 = null;
+    // write this line
+    reference2 = null;
   }
+  */
+    const value1 = 5;
+    let reference1 = [];
+    let value2 = value1; // write this line
+    console.assert(value2 === value1, "value1 should strictly equal value2");
+    let reference2 = reference1; // write this line
+    console.assert(
+      reference2 === reference1,
+      "reference1 should strictly equal reference2"
+    );
+    value2 = value2 + 1; // write this line              // did not changed anything, value1 is already not null
+    console.assert(value1 !== null, "value1 should strictly equal ___");
+    reference1[0] = "hi!"; // write this line            //reference1[0] === reference2[0] already so.
+    console.assert(
+      reference1[0] === reference2[0],
+      "references[0] should be strictly equal"
+    );
+    console.assert(
+      reference1[0] === "hi!",
+      "reference1[0] should be strictly equal to 'hi!'"
+    ); // write this line                                // did not write anything, in the beginning we wrote it.
+    console.assert(
+      reference1 === reference2,
+      "references should be strictly equal"
+    );
+    // remove the array from memory
+    reference1 = null; // write this line
+    reference1 = null; // write this line
+  }
+
   evaluate(passTheAssertions2);
 
-
   function passTheAssertions3() {
-    ; // write this line
-    ; // write this line
-    console.assert(arr1 !== arr2, 'the variables should not be strictly equal');
-    console.assert(arr1[1] === arr2[1], 'their first entries should be the same');
-    console.assert(arr1[1] === 'B', 'arr1[1]] should be "B"');
+    // write this line
+    arr1 = []; // write this line
+    arr2 = [];
+    console.assert(arr1 !== arr2, "the variables should not be strictly equal");
+    console.assert(
+      arr1[1] === arr2[1],
+      "their first entries should be the same"
+    );
+    console.assert(arr1[1] === "B", 'arr1[1]] should be "B"');
 
     const index = 0;
-    console.assert(arr1[index] === arr2[index], 'arr1[index] should strictly equal arr2[index]');
-    console.assert(arr1[index] === 'A', 'arr1[index] should be "A"');
+    console.assert(
+      arr1[index] === arr2[index],
+      "arr1[index] should strictly equal arr2[index]"
+    );
+    console.assert(arr1[index] === "A", 'arr1[index] should be "A"'); // write this line // write this line
 
-    ; // write this line
-    ; // write this line
-    console.assert(arr1[arr2[2]] === 'B', 'arr2[2] should be "B"s index in arr1');
-    console.assert(arr1[arr2[2]] === arr2[arr1[2]], 'some tricky nested thing should be true');
+    console.assert(
+      arr1[arr2[2]] === "B",
+      'arr2[2] should be "B"s index in arr1'
+    );
+    console.assert(
+      arr1[arr2[2]] === arr2[arr1[2]],
+      "some tricky nested thing should be true"
+    ); // write this line
 
-    ; // write this line
-    console.assert(arr1 !== arr2, 'arr1 should strictly equal arr2');
-    console.assert(arr3 !== arr1, 'arr3 should not strictly equal arr`');
-    console.assert(arr3 === arr2, 'arr3 should strictly equal arr2');
-    console.assert(arr3[index] === arr1[0], 'arr3[index] should strictly equal arr1[0]');
+    console.assert(arr1 !== arr2, "arr1 should strictly equal arr2");
+    console.assert(arr3 !== arr1, "arr3 should not strictly equal arr`");
+    console.assert(arr3 === arr2, "arr3 should strictly equal arr2");
+    console.assert(
+      arr3[index] === arr1[0],
+      "arr3[index] should strictly equal arr1[0]"
+    ); // write this line
 
-    ; // write this line
-    console.assert(arr3[2] === arr2[index], 'arr3[2] should strictly equal arr2[index]');
+    console.assert(
+      arr3[2] === arr2[index],
+      "arr3[2] should strictly equal arr2[index]"
+    );
   }
   evaluate(passTheAssertions3);
-
-
-
 } catch (err) {
   console.log(err);
-  document.body.appendChild(
-    evaluate.errorSearchComponent('.js file', err)
-  );
+  document.body.appendChild(evaluate.errorSearchComponent(".js file", err));
 }
 
 {
   console.groupEnd();
-  document.body.appendChild(document.createElement('hr'));
+  document.body.appendChild(document.createElement("hr"));
 }

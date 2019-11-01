@@ -62,7 +62,7 @@ try {
     { name: 'boo, true', args: [true], expected: 'boolean' },
     { name: 'boo, false', args: [false], expected: 'boolean' },
     // null's type is 'null'.  just remember, don't try yet to understand
-    { name: 'obj, true', args: [null], expected: '' },
+    { name: 'obj, true', args: [null], expected: 'object' },            
     // undefined. like with null, there is only one value with this type
     { name: 'und, undefined', args: [undefined], expected: 'undefined' },
     // strings are anything with quotes around it
@@ -74,12 +74,12 @@ try {
     { name: 'num, Infinity', args: [Infinity], expected: 'number' },
     { name: 'num, 4', args: [4], expected: 'number' },
     // write 6 more passing test cases with expected value 'number'
-    { name: '', args: null, expected: null },
-    { name: '', args: null, expected: null },
-    { name: '', args: null, expected: null },
-    { name: '', args: null, expected: null },
-    { name: '', args: null, expected: null },
-    { name: '', args: null, expected: null },
+    { name: 'num,NaN', args: [NaN], expected: 'number' },
+    { name: 'str,3', args: ['3'], expected: 'string' },
+    { name: 'num,null', args: [null], expected: 'object' },
+    { name: 'obj,false', args: [null], expected: 'object'},
+    { name: 'this,undefined', args: [undefined], expected: 'undefined' },
+    { name: 'num, -0', args: [-0], expected: 'number' },
   ]
   function allValuesHaveAType(value) {
     return typeof value;
@@ -90,12 +90,12 @@ try {
 
   // fix the test cases' expected values to pass the function
   const typeofReturnsAStringTests = [
-    { name: 'boo, true', args: [true], expected: 'boolean' },
-    { name: 'boo, false', args: [false], expected: 'boolean' },
-    { name: 'obj, true', args: [null], expected: 'object' },
-    { name: 'und, undefined', args: [undefined], expected: 'undefined' },
+    { name: 'boo, true', args: [true], expected: 'string' },
+    { name: 'boo, false', args: [false], expected: 'string' },
+    { name: 'obj, true', args: [null], expected: 'string' },
+    { name: 'und, undefined', args: [undefined], expected: 'string' },
     { name: 'str, anything with quotes!', args: ['anything with quotes!'], expected: 'string' },
-    { name: 'num, 4', args: [4], expected: 'number' },
+    { name: 'num, 4', args: [4], expected: 'string' },
   ];
   function typeofReturnsAString(value) {
     const typeofValue = typeof value;
@@ -125,16 +125,16 @@ try {
 
   // fix the expected values to pass the tests
   const strictEqualityTests = [
-    { name: 'NaN', args: [NaN, NaN], expected: null },
-    { name: 'first', args: [true, 'true'], expected: null },
-    { name: 'second', args: [1, '1'], expected: null },
-    { name: 'third', args: ['1', '1'], expected: null },
-    { name: 'fourth', args: [1000, 1e3], expected: null },
-    { name: 'fifth', args: [+0, -0], expected: null },
-    { name: 'sixth', args: [1, 1.0], expected: null },
-    { name: 'seventh', args: ['', ""], expected: null },
-    { name: 'eighth', args: ["", ``], expected: null },
-    { name: 'ninth', args: ['  ', ' '], expected: null },
+    { name: 'NaN', args: [NaN, NaN], expected: false },
+    { name: 'first', args: [true, 'true'], expected: false },
+    { name: 'second', args: [1, '1'], expected: false},
+    { name: 'third', args: ['1', '1'], expected: true },
+    { name: 'fourth', args: [1000, 1e3], expected: true },
+    { name: 'fifth', args: [+0, -0], expected: true }, // app.js - zero strings. it seems they are not equal 
+    { name: 'sixth', args: [1, 1.0], expected: true },
+    { name: 'seventh', args: ['', ""], expected: true },
+    { name: 'eighth', args: ["", ``], expected: true },
+    { name: 'ninth', args: ['  ', ' '], expected: false },
   ];
   function strictEquality(a, b) {
     // if type OR value are not the same, returns false
@@ -144,19 +144,19 @@ try {
   strictEquality.quizzing = true;
   evaluate(strictEquality, strictEqualityTests);
 
-
+  // now I got the logic of this exercise, last module I have done it withut actual knowladge!
 
   const strictInequalityTests = [
-    { name: 'NaN', args: [NaN, NaN], expected: null },
-    { name: 'first', args: [true, 'true'], expected: null },
-    { name: 'second', args: [1, '1'], expected: null },
-    { name: 'third', args: ['1', '1'], expected: null },
-    { name: 'fourth', args: [1000, 1e3], expected: null },
-    { name: 'fifth', args: [+0, -0], expected: null },
-    { name: 'sixth', args: [1, 1.0], expected: null },
-    { name: 'seventh', args: ['', ""], expected: null },
-    { name: 'eighth', args: ["", ``], expected: null },
-    { name: 'ninth', args: ['  ', ' '], expected: null },
+    { name: 'NaN', args: [NaN, NaN], expected: true },
+    { name: 'first', args: [true, 'true'], expected: true },
+    { name: 'second', args: [1, '1'], expected: true },
+    { name: 'third', args: ['1', '1'], expected: false },
+    { name: 'fourth', args: [1000, 1e3], expected: false },
+    { name: 'fifth', args: [+0, -0], expected: false },
+    { name: 'sixth', args: [1, 1.0], expected: false },
+    { name: 'seventh', args: ['', ""], expected: false },
+    { name: 'eighth', args: ["", ``], expected: false },
+    { name: 'ninth', args: ['  ', ' '], expected: true },
   ];
   function strictInequality(a, b) {
     // if type OR value are not the same, returns true
