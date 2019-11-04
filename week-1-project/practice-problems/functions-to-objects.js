@@ -50,9 +50,9 @@ try {
     console.assert(9 === sum(5, 4), 'sum(5,4) should be 9');
 
     const obj = {
-      result: 0,
+      result: 0,                 // is this zero the number zero?   what is it for?
       sum: function (a, b) {
-        this.result = a + b
+        this.result = a + b      // a+b should be 0 then
       }
     }
 
@@ -95,6 +95,13 @@ try {
 
   function example_twoMethods() {
 
+     /* in this function beside the pure add function; there is
+  an object that includes properties to add
+  and a function to add those properties
+  another function to return the result.
+  Also how to call that result with an example.
+  */
+
     // pure functions can only get their values by argument
     //  and must return their value to the global scope
     function pureAdd(a, b) {
@@ -120,7 +127,8 @@ try {
     const result2 = obj.sumAandB();
 
   }
-  evaluate(example_twoMethods);
+  evaluate(example_twoMethods);  
+  
 
 
   function refactor1() {
@@ -169,7 +177,7 @@ try {
 
     const obj = {
       array: [3],
-      mergeArrays: function (arrToMerge) {  return obj.array.concat(arrToMerge) }
+      mergeArrays: function (arrToMerge) {  return this.array.concat(arrToMerge); }
     }
 
     obj.mergeArrays([2]);
