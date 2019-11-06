@@ -142,17 +142,28 @@ try {
   const mergingObject3 = { a: 1, y: 2 };
 
   const mergeObjsTests = [
-    { name: 'same args ...', args: [mergingObject1, mergingObject2], expected: { a: 0, b: 1, x: 0, y: 1 } },
+    { name: 'same args ...', args: [mergingObject1, mergingObject2], expected: { a: 0, b: 1, x: 0, y: 1 } }, //first mo1 then mo2
     { name: '... same return value', args: [mergingObject1, mergingObject2], expected: { a: 0, b: 1, x: 0, y: 1 } },
     { name: 'every time!', args: [mergingObject1, mergingObject2], expected: { a: 0, b: 1, x: 0, y: 1 } },
-    { name: 'case 4', args: [mergingObject1, { tree: 'birch' }], expected: { a: 0, b: 1, tree: 'birch' } },
+    { name: 'case 4', args: [mergingObject1, { tree: 'birch' }], expected: { a: 0, b: 1, tree: 'birch' } }, // always last
     { name: 'case 5', args: [{ tree: 'birch' }, mergingObject2], expected: { x: 0, y: 1, tree: 'birch' } },
     { name: 'case 6', args: [mergingObject2, {}], expected: { x: 0, y: 1 } },
-    { name: 'case 7', args: [mergingObject3, mergingObject1], expected: { a: 1, b: 1, y: 2 } },
-    { name: 'case 8', args: [mergingObject3, mergingObject2], expected: { x: 0, y: 2, a: 1 } },
+    { name: 'case 7', args: [mergingObject3, mergingObject1], expected: { a: 1, b: 1, y: 2 } }, //first mo1 then mo3,mo1 affected
+    { name: 'case 8', args: [mergingObject3, mergingObject2], expected: { x: 0, y: 2, a: 1 } }, // first mo2 then mo3,mo2 affected
   ];
   function mergeObjects(obj1, obj2) {
     // write me!
+    // 1,2,3,  5,6 passes
+    // return Object.assign(obj1,obj2,{});
+    
+    // 1,2,3,  4,7 passes
+    // return Object.assign(obj2,obj1,{});
+
+    // 1,2,3,  4,5,6 passas
+    // return Object.assign({},obj1,obj2);
+
+    return Object.assign({},obj2,obj1);
+
   }
   mergeObjects.display = true;
   evaluate(mergeObjects, mergeObjsTests);
@@ -163,13 +174,37 @@ try {
   const replaceItemTests = [
     { name: 'same args ...', args: [replaceArray, 2, 'hi!'], expected: [0, 'e', 'hi!'] },
     { name: '... same return value', args: [replaceArray, 2, 'hi!'], expected: [0, 'e', 'hi!'] },
-    { name: 'every time !', args: [replaceArray, 2, 'hi!'], expected: [0, 'e', 'hi!'] },
-    { name: 'case 4', args: [replaceArray, 1, 'bye!'], expected: [0, 'bye!', true] },
-    { name: 'case 5', args: [replaceArray, 0, 'huh'], expected: ['huh', 'e', true] },
+    { name: 'every time !', args: [replaceArray, 2, 'hi!'], expected: [0, 'e', 'hi!'] }, // true and 2 missing
+    { name: 'case 4', args: [replaceArray, 1, 'bye!'], expected: [0, 'bye!', true] }, //e and 1 missing
+    { name: 'case 5', args: [replaceArray, 0, 'huh'], expected: ['huh', 'e', true] }, //0 missing //1.arg
     { name: 'case 6', args: [['p', null], 0, null], expected: [null, null] },
   ];
   function replaceItem(arr, index, newItem) {
     // write me!
+    // return Object.assign(index,newItem,arr); - all orange
+
+    /* all orange
+      function pusherNoSideEffects(arr, newValue) {
+      const newArray = [...arr];
+      newArray.push(newValue);
+      return newArray;
+         const newarray = [...arr];
+         newArray.push(newItem);
+         return newArray; */
+
+    /* 1,2,3,6 passes
+      function propAdderNoSideEffects(obj, newKey, newValue) {
+      const newObj = Object.assign({}, obj);
+      newObj[newKey] = newValue;
+      return newObj; 
+    const newArray = Object.assign(arr);
+    newArray[index] = newItem;
+    return newArray; */
+
+    const newArray = [...arr];
+    newArray[index] = newItem;
+    return newArray;
+
   }
   replaceItem.display = true;
   evaluate(replaceItem, replaceItemTests);
@@ -189,6 +224,13 @@ try {
   ];
   function combineArrays(arr1, arr2) {
     // write me!
+
+    return arr1.concat(arr2);
+
+    /*
+    let combine = [...arr1,...arr2];
+    return combine;
+    */ 
   }
   combineArrays.display = true;
   evaluate(combineArrays, combineArraysTests);
@@ -207,7 +249,29 @@ try {
   ];
   function repeatItems(items, numRepeats) {
     // write me!
+    /* all orange
+    let repeated = items.repeat(numRepeats);
+    return repeated;
+    */
+
+    /* all orange
+   let repetedArray = items.map((element) => {
+     return element + element;});
+   return repetedArray;
+   */
+  
+   //js1 week2 hw
+   let lastRepetedArray = items.map(functionToRepeat);
+
+   function functionToRepeat (arg){
+     const newArr = [];
+
+     for(let i = 0; i < numRepeats; i++) { newArr.push(arg); }
+     return newArr;
+   }
+   return lastRepetedArray;
   }
+
   repeatItems.display = true;
   evaluate(repeatItems, repeatItemsTests);
 
@@ -226,6 +290,7 @@ try {
   ];
   function concatArrays(arr1, arr2) {
     // write me!
+    return arr2.concat(arr1);
   }
   concatArrays.display = true;
   evaluate(concatArrays, concatArraysTests);
@@ -246,6 +311,14 @@ try {
   function mergeArrays(arr1, arr2) {
     // write me!
     // consider filtering one of the arrs with .indexOf in the others
+    
+    // how Ufuk made it
+    // return [...new Set([...arr1 ,...arr2])]; // ES6 methods.}
+    
+    // I read https://www.sitepoint.com/es6-enhanced-object-literals/  for ES6 methods
+
+    // return [...arr1,...arr2]; //pass only second one
+    // return mergeArrays = [...arr1,...arr2];
   }
   mergeArrays.display = true;
   evaluate(mergeArrays, mergeArraysTests);

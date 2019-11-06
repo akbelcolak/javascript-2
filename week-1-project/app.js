@@ -160,12 +160,17 @@ const object = {
   },
   sumOfNumbery: function() {
     
-    // I will do with reduce method but I did not totaly understand yet
+    const sumAll = (a, b) => Number(a) + Number(b);
+    return this.numberyStrings.reduce(sumAll,0);
   },
   sumOfNaNy: function() {
     
     // return value is 'result !== result'
     // only NaN !== NaN
-    return NaN; 
+    // return NaN; 
+    if(this.NaNyStrings.length === 0 && this.numberyStrings.length !== 0) {
+      return NaN;}
+    const sumNaN = (a, b) => Number(a) + Number(b);
+    return this.NaNyStrings.reduce(sumNaN,0);
   }
 };

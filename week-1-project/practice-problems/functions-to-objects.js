@@ -134,16 +134,18 @@ try {
   function refactor1() {
 
     // refactor this function into a method
+
     function mergeArrays(arr1, arr2) {
       return [...arr1, ...arr2];
     }
 
     const obj = {
       array: [3],
-      mergeArrays: function (arrToMerge) {return [...this.array, ...arrToMerge] // the points are to expand the array
+      mergeArrays: function (arrToMerge) {
+        
+        return [...this.array, ...arrToMerge] } // the points are to expand the array
       
         //another way to do it is ' return this.array.concat(arrToMerge); '
-      }
     }
 
 
@@ -177,7 +179,14 @@ try {
 
     const obj = {
       array: [3],
-      mergeArrays: function (arrToMerge) {  return this.array.concat(arrToMerge); }
+      mergeArrays: function (arrToMerge) {
+       
+       // how Mert does: 
+       // return this.array = [...this.array,...arrToMerge]
+
+       return this.array = this.array.concat(arrToMerge);
+
+       }
     }
 
     obj.mergeArrays([2]);
@@ -203,7 +212,9 @@ try {
 
     const obj = {
       mixer: '',
-      remix: function (str) { }
+      remix: function (str) {
+        return str.split('').join(obj.mixer);
+       }
     };
 
     console.assert(obj.remix('hello') === 'hello', 'assert 1');
@@ -227,8 +238,14 @@ try {
     const obj = {
       mixer: '',
       remixed: '',
-      remix: function (str) { },
-      getRemixed: function () { }
+      /*
+      remix: function (str) { return str.split('').join(this.mixer);},
+      getRemixed: function () { return str.split('').join(this.remixed);}
+      */
+
+     remix: function (str) { this.remixed = str.split('').join(this.mixer);},
+     getRemixed: function () { return this.remixed;}
+
     };
 
     obj.remix('hello');
