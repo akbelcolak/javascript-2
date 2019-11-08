@@ -12,8 +12,8 @@ try {
 
     const obj = {
       a: 0,
-      getA: function () { },
-      sumAB: function (b) { },
+      getA: function () {return this.a },
+      sumAB: function (b) {  return this.a+b},
     };
 
     console.assert(obj.getA() === 0, '1: obj.getA() should return 0');
@@ -191,15 +191,23 @@ try {
   }
   evaluate(writeToObject3);
 
-
+  // mert wrote in slack:
   function readAndWrite1() {
-
     const obj = {
       arr: [],
-      merge: function (toMerge) { },
-      replaceAll: function (newEntry) { },
-      getRemixed: function (mixer) { },
-      getCopy: function () { }
+      merge: function (toMerge) {
+        arr.unshift(...toMerge);
+        return this.arr;},
+      replaceAll: function (newEntry) { 
+        arr = arr.map(x => newEntry);
+        return this.arr;
+      },
+      getRemixed: function (mixer) { 
+        return [...arr].join(mixer);
+      },
+      getCopy: function () { 
+        return [...arr];
+      }
     };
 
     obj.merge([1, 2]);

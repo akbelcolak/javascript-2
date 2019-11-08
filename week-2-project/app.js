@@ -35,11 +35,12 @@ const object = {
     // if (this.hasKey(this.entries, key)){}
     // if (this.entries.hasKey(key)) {}
     // if (this.entries.hasKey(this.entries, key)) {}
-    if (null) { // write me! (using this.hasKey)
+    
+    if (key in this.entries===true) { // write me! (using this.hasKey)
       return { [key]: new Error(`addEntry: key "${key}" already exists`) };
     }
-
-    else {return }
+    else {this.entries[key] = value;
+      return true;}
   },
   removeEntry: function (key) {
     if (typeof key !== 'string') { // write me!
@@ -48,9 +49,11 @@ const object = {
     if (!this.hasKey(this.entries, key)) { // write me! (using this.hasKey)
       return { [key]: new ReferenceError(`removeEntry: no property "${key}" in this.entries`) };
     }
-
+    delete this.entries[key];
+    return true;
     
   },
+  
   updateEntry: function (key, value) {
     if (typeof key !== 'string') { // write me!
       return new TypeError('updateEntry: key should be a string');
@@ -61,17 +64,21 @@ const object = {
     if (!this.hasKey(this.entries, key)) { // write me! (using this.hasKey)
       return { [key]: new ReferenceError(`updateEntry: no property "${key}" in this.entries`) };
     }
-
+    else { this.entries[key] = value;
+      return true;}
     // write me!
   },
+
+  
   readAll: function () {
-    // write me!
+    let readObj = {...this.entries}
+    return readObj;
   },
   findByKey: function (key) {
-    if () { // write me!
+    if (typeof key!== 'string') { // write me!
       return new TypeError('findByKey: key should be a string');
     }
-    if (null) { // write me! (using this.hasKey)
+    if (!this.hasKey(this.entries,key)) { // write me! (using this.hasKey)
       return { [key]: new ReferenceError(`findByKey: no property "${key}" in this.entries`) };
     }
 
