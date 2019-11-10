@@ -32,6 +32,7 @@ try {
     console.log(array2);
 
     // to create a new array in memory, you must write new square brackets
+    // (or call an array method that returns a copy, more on that later)
     const array3 = [];
     // reassigning object2 will make it point to ...
     array2 = array3;

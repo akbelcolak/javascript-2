@@ -8,6 +8,9 @@
   - and users can access & modify that data
 */
 
+
+
+
 const object = {
   entries: {},
   isPrimitive: function (value) {
@@ -30,6 +33,7 @@ const object = {
     if (this.isPrimitive(value) === false) { // write me! (using this.isPrimitive)
       return new TypeError('addEntry: value should be a primitive');
     }
+<<<<<<< HEAD
     // what I tried:
     // if (this.hasOwnProperty(key) === true){}
     // if (this.entries.hasOwnProperty(key) === true){}
@@ -39,6 +43,10 @@ const object = {
     
     if (key in this.entries===true) { // write me! (using this.hasKey)
       return { [key]: new Error(`addEntry: key "${key}" already exists`) };
+=======
+    if (null) { // write me! (using this.hasKey)
+      return new Error(`addEntry: key "${key}" already exists`);
+>>>>>>> upstream/master
     }
     else {this.entries[key] = value;
       return true;}
@@ -47,12 +55,22 @@ const object = {
     if (typeof key !== 'string') { // write me!
       return new TypeError('removeEntry: key should be a string');
     }
+<<<<<<< HEAD
     if (!this.hasKey(this.entries, key)) { // write me! (using this.hasKey)
       return { [key]: new ReferenceError(`removeEntry: no property "${key}" in this.entries`) };
     }
     delete this.entries[key];
     return true;
     
+=======
+    if (null) { // write me! (using this.hasKey)
+      return new ReferenceError(`removeEntry: no property "${key}" in this.entries`);
+    }
+
+    delete this.entries[key]
+    return true
+    // write me!
+>>>>>>> upstream/master
   },
   
   updateEntry: function (key, value) {
@@ -62,8 +80,13 @@ const object = {
     if (!this.isPrimitive(value)) { // write me! (using this.isPrimitive)
       return new TypeError('updateEntry: value should be a primitive');
     }
+<<<<<<< HEAD
     if (!this.hasKey(this.entries, key)) { // write me! (using this.hasKey)
       return { [key]: new ReferenceError(`updateEntry: no property "${key}" in this.entries`) };
+=======
+    if (null) { // write me! (using this.hasKey)
+      return new ReferenceError(`updateEntry: no property "${key}" in this.entries`);
+>>>>>>> upstream/master
     }
     else { this.entries[key] = value;
       return true;}
@@ -79,8 +102,13 @@ const object = {
     if (typeof key!== 'string') { // write me!
       return new TypeError('findByKey: key should be a string');
     }
+<<<<<<< HEAD
     if (!this.hasKey(this.entries,key)) { // write me! (using this.hasKey)
       return { [key]: new ReferenceError(`findByKey: no property "${key}" in this.entries`) };
+=======
+    if (null) { // write me! (using this.hasKey)
+      return new ReferenceError(`findByKey: no property "${key}" in this.entries`);
+>>>>>>> upstream/master
     }
 
     //all steps
