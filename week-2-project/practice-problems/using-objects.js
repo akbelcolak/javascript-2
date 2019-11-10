@@ -36,8 +36,8 @@ try {
 
     const obj = {
       word: '',
-      getWord: function () { },
-      concat: function (secondHalf) { },
+      getWord: function () { return 'the word is ' + this.word;},
+      concat: function (secondHalf) { return this.word.concat(secondHalf);},
     };
 
     console.assert(obj.getWord() === 'the word is ', `1: obj.getWord() should return 'the word is '`);
@@ -59,8 +59,12 @@ try {
 
     const obj = {
       array: ['hi!'],
-      getArray: function () { },
-      getCopy: function () { },
+      getArray: function () { return obj.array;},
+      getCopy: function () { 
+        
+        const copiedArray1 = [...obj.arr];
+        return copiedArray1;
+      },
     };
 
     const gottenArray1 = obj.getArray();
@@ -94,8 +98,8 @@ try {
 
     const obj = {
       string: '',
-      setString: function (str) { },
-      remixString: function (mixer) { }
+      setString: function (str) { this.string =str;},
+      remixString: function (mixer) { this.string = this.string.split('').join(mixer);}
     }
 
     obj.setString('hoy');
@@ -105,7 +109,7 @@ try {
     console.assert(obj.string === 'mimi', 'assert 2');
 
     obj.remixString('|');
-    console.assert(obj.string === 'm|i|m|i', 'assert 3');
+    console.assert(obj.string === 'm|i|m|i', 'assert 3'); // this.string
 
     obj.setString('-_-');
     console.assert(obj.string === '-_-', 'assert 4');

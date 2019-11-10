@@ -26,7 +26,8 @@ const object = {
     if (typeof key !== 'string') {
       return new TypeError('addEntry: key should be a string');
     }
-    if (this.isPrimitive !== value) { // write me! (using this.isPrimitive)
+    // !this.isPrimitive(value)
+    if (this.isPrimitive(value) === false) { // write me! (using this.isPrimitive)
       return new TypeError('addEntry: value should be a primitive');
     }
     // what I tried:
@@ -58,7 +59,7 @@ const object = {
     if (typeof key !== 'string') { // write me!
       return new TypeError('updateEntry: key should be a string');
     }
-    if (this.isPrimitive !== value) { // write me! (using this.isPrimitive)
+    if (!this.isPrimitive(value)) { // write me! (using this.isPrimitive)
       return new TypeError('updateEntry: value should be a primitive');
     }
     if (!this.hasKey(this.entries, key)) { // write me! (using this.hasKey)
@@ -82,7 +83,12 @@ const object = {
       return { [key]: new ReferenceError(`findByKey: no property "${key}" in this.entries`) };
     }
 
-    // write me!
+    //all steps
+    // return {}  return an emty object so that it is not undefined
+    // return {[key]: ''}  what are you looking for in your object; a key
+    // return {[key]: this.entries} now you should be
+    // return {[key]: this.entries[key]}
+    else {return { [key]: this.entries[key] };}
   },
   findByValue: function (value) {
     if (this.isPrimitive !== value) { // write me! (using this.isPrimitive)
