@@ -150,7 +150,6 @@ const object = {
     // another style to write function
     // return this.numberyStrings.map(numbersInStrings => Number(numbersInStrings));
   },
-<<<<<<< HEAD
   NaNyAsNumbers: function() {
 
     // there is no return result in any taste case
@@ -158,10 +157,6 @@ const object = {
     return this.NaNyStrings.map (nothing => Number(nothing));
     //first, I call numbery strings => it only passed first case
     // now I call Nany strings!
-=======
-  sumOfNumbery: function () {
-    // write me! (using a Array.prototype.reduce())
->>>>>>> upstream/master
   },
   sumOfNumbery: function() {
     

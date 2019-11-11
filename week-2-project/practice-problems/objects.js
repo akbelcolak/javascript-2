@@ -125,7 +125,6 @@ try {
 
     // ---
 
-<<<<<<< HEAD
     a1.x = "hi!"; // write one line to pass the assertions
     console.assert(a1.x === a2.x, 'a1.x should strictly equal a2.x');
     console.assert(a1.x === 'hi!', 'a1.x should strictly equal "hi!"');
@@ -133,14 +132,6 @@ try {
     // b1.x = b2.x 
     b2.x = "bye!"; // write two lines to pass the assertions
     b1.x = "bye!";
-=======
-    a1.x = 'hi!'; // write one line to pass the assertions
-    console.assert(a1.x === a2.x, 'a1.x should strictly equal a2.x');
-    console.assert(a1.x === 'hi!', 'a1.x should strictly equal "hi!"');
-
-    b1.x = 'bye!'; // write two lines to pass the assertions
-    b2.x = 'bye!';
->>>>>>> upstream/master
     console.assert(b1.x === b2.x, 'b1.x should strictly equal b2.x');
     console.assert(b1.x === 'bye!', 'b1.x should strictly equal "bye!"');
 

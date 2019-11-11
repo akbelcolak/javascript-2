@@ -35,10 +35,12 @@ try {
   function exercise1(arg) {
     const result = mightReturnAnError(arg);
 
-    if (null) { // write this condition
+   
+    if (result  instanceof Error) { 
+      return false; // write this condition
       // write me!
     } else {
-      // write me!
+      return true;// write me!
     }
 
   }
@@ -47,20 +49,27 @@ try {
 
 
   const exercise2Tests = [
-    { name: 'first', args: [4], expected: 4 },
-    { name: 'second', args: [null], expected: 'first error' },
-    { name: 'third', args: [undefined], expected: 'third error' },
-    { name: 'fourth', args: [false], expected: false },
-    { name: 'fifth', args: [[]], expected: 'second error' },
-    { name: 'sixth', args: [{}], expected: 'second error' },
-    { name: 'seventh', args: [function () { }], expected: 'third error' },
-    { name: 'eighth', args: ['4'], expected: '4' },
-    { name: 'ninth', args: ['e'], expected: 'third error' },
+    { name: 'first', args: [4], expected: 4 }, // nummer-nummer
+    { name: 'second', args: [null], expected: 'first error' }, // null - 1 error
+    { name: 'third', args: [undefined], expected: 'third error' }, //undefined - 3 error
+    { name: 'fourth', args: [false], expected: false }, // boelean - boelan
+    { name: 'fifth', args: [[]], expected: 'second error' },// array - 2 e
+    { name: 'sixth', args: [{}], expected: 'second error' },//object - 2 e
+    { name: 'seventh', args: [function () { }], expected: 'third error' },//function - 3
+    { name: 'eighth', args: ['4'], expected: '4' }, // numberyString - string
+    { name: 'ninth', args: ['e'], expected: 'third error' }, //string - 3 e
   ]
+  // All returned undefined instead of expected
+
   function exercise2(arg) {
     const result = mightReturnAnError(arg);
-
+    console.log(result);
     // write me!
+    if ( result instanceof Error){
+      return result.message;
+    } else {
+      return arg;
+    }
 
   }
   exercise2.display = true;
@@ -81,6 +90,11 @@ try {
   ]
   function exercise3(arg) {
     const result = mightReturnAnError(arg);
+    if (result instanceof Error){
+      return result.fileName;
+    } else{
+      return arg;
+    }
 
     // write me!
 
