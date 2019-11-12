@@ -114,7 +114,7 @@ try {
 
 
   const findByKeyTests = [
-    { name: 'first', args: [firstObj, 'x'], expected: {} }, //there is no such key as x, so return empty
+    { name: 'first', args: [firstObj, 'x'], expected: {} }, //there is no such key as x, so return empty object
     { name: 'second',args: [firstObj, 'a'], expected: { a: 0 } },// if there is key as the same name as arg return the key with its value
     { name: 'third', args: [firstObj, 'a'], expected: { a: 0 } },
     { name: 'fourth',args: [secondObj, 'a'], expected: { a: 0 } },
@@ -122,13 +122,21 @@ try {
     { name: 'fifth', args: [{ b: 'hi!' }, 'b'], expected: { b: 'hi!' } },
   ];
   function findByKey(obj, key) {
+    const resultObject = {};
+    if (hasKey(obj,key)){
+      resultObject[key] = obj[key];
+      return resultObject;
+    }
+    else { // 1 pas
+      return {};
+    }
     // write me!
     // (remember to avoid side effects)
     /* 'in' operator for property existance check
     let user = { name: "John", age: 30 };
     alert( "age" in user ); // true, user.age exists
     alert( "blabla" in user ); // false, user.blabla doesn't exist */
-
+/*
     const findObj = {...obj};
     if (key in findObj === true){ 
       let newfind = {};
@@ -136,8 +144,8 @@ try {
       newfind[key] = value;
       return newfind;
     }
-    /*
-    if (key in findObj === true){  
+    
+    //if (key in findObj === true){  
       return findObj; } //2,3,5 passes
     
       and next I tried to find by value :
@@ -145,9 +153,6 @@ try {
       let newfind = findObj;
       return newfind;} */
 
-    else { // 1 pas
-      return {};
-    }
 
   }
   findByKey.display = true;

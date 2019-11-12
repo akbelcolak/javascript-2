@@ -76,9 +76,9 @@ try {
   evaluate(exercise2, exercise2Tests);
 
 
-
+   
   const exercise3Tests = [
-    { name: 'first', args: [4], expected: { number: 4 } },
+    { name: 'first', args: [4], expected: { number: 4 } }, // all of them returned as objects
     { name: 'second', args: [null], expected: { object: 'first error' } },
     { name: 'third', args: [undefined], expected: { 'undefined': 'third error' } },
     { name: 'fourth', args: [false], expected: { 'boolean': false } },
@@ -91,13 +91,37 @@ try {
   function exercise3(arg) {
     const result = mightReturnAnError(arg);
     if (result instanceof Error){
-      return result.fileName;
-    } else{
-      return arg;
-    }
+    
+      // there should be an 'obj,' and key=source of arg, value should be result.message in a string
+      // { [...] : ... }
+      const resultObject = {[typeof arg] : result.message};
+      return resultObject;
+    } else { return {[typeof arg] : arg};}
 
-    // write me!
+      /*
+        let newresult = {
+         key1 : typeof arg,
+         key2 : result.message
+      };
+      return newresult;
 
+        returned:  Obj, {key1: "object", key2: "first error"}
+        expected:  Obj, {object: "first error"} 
+
+        let newresult = {
+          key1 : typeof arg,
+          key2 : result.message,
+          key3: function () {
+            return `${this.key1}: ${this.key2}`;
+          }
+        }
+        return newresult.key3();
+        
+        returned:  str, object: first error
+        expected:  Obj, {object: "first error"}*/
+        
+      // return typeof arg + ': '+ arg; // returned:  str, number: 4  // expected:  Obj, {number: 4}
+  
   }
   exercise3.display = true;
   evaluate(exercise3, exercise3Tests);
@@ -113,11 +137,13 @@ try {
     { name: 'seventh', args: [function () { }], expected: ['third error'] },
     { name: 'eighth', args: ['4'], expected: [null, '4'] },
     { name: 'ninth', args: ['e'], expected: ['third error'] },
-  ]
+  ] //if the arg is object return result.message , else return null, arg
   function exercise4(arg) {
     const result = mightReturnAnError(arg);
-
-    // write me!
+    // [[], ...]
+    if (result instanceof Error){
+      return [result.message];
+    } else { return [null, arg];}
 
   }
   exercise4.display = true;
