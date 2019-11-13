@@ -1,13 +1,14 @@
 const object = {
   currentKey: '',
   set currentEntry(key) {
-    if (null) { // write the early return condition
+    if (typeof key !== 'string') { // write the early return condition
       throw new TypeError('set currentEntry: key should be a string');
     }
-    if (null) { // write the early return condition
+    if (!this.hasKey(this.entries, key)) { // write the early return condition
       throw new ReferenceError(`set currentEntry: no entry with key "${key}"`);
     }
-
+    if (result instanceof Error){return this.currentKey = result.message;}
+    
     // write me!
   },
   get currentEntry() {
