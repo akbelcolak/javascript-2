@@ -79,15 +79,15 @@ const object = {
     }
   },
   removeEntry: function (key) {
-    if (typeof key !== 'string') { 
+    if (typeof key !== 'string') { // write me!
       return new TypeError('removeEntry: key should be a string');
     }
-    if (!this.hasKey(this.entries, key)) {
+    else if (!this.hasKey(this.entries, key)) { // write me! (using this.hasKey)
       return new ReferenceError(`removeEntry: no property "${key}" in this.entries`);
     }
-     delete this.entries[key];
-     return true;
-  },
+    else {delete this.entries[key];
+          return true;}
+    },
   updateEntry: function (key, value) {
     if (typeof key !== 'string') { 
       return new TypeError('updateEntry: key should be a string');
